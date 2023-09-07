@@ -4,7 +4,6 @@ import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
 import TaskEdit from './components/TaskEdit';
 import TaskDetail from './components/TaskDetail';
-import Demo from './components/demo';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
             <Route path="/add" element={<TaskForm/>} />
             <Route path="/edit/:id" element={<TaskEdit/>} />
             <Route path="/task/:id" element={<TaskDetail/>} />
-            <Route path='/demo' element={<Demo/>}/>
           </Routes>
         </main>
       </div>

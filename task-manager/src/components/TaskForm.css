@@ -1,13 +1,9 @@
-/* TaskForm.css */
-
-/* Styles for the form container */
 div {
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
 }
 
-/* Styles for form elements */
 form {
     display: flex;
     flex-direction: column;
@@ -28,13 +24,11 @@ label {
     font-weight: bold;
 }
 
-/* Styles for the priority dropdown container */
 .priority-container {
     display: flex;
     align-items: center;
 }
 
-/* Styles for the priority dropdown */
 select {
     flex: 1;
     padding: 8px;
@@ -42,7 +36,6 @@ select {
     border-radius: 4px;
 }
 
-/* Style the "Add Task" button */
 button[type="submit"] {
     background-color: #007bff;
     color: #fff;
@@ -54,4 +47,19 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+#home{
+    background-color: #abcaec;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin:5px;
+}
+
+#link{
+    margin:8px 20px;
+    padding:8px 33px;
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 function TaskEdit() {
@@ -61,12 +62,13 @@ function TaskEdit() {
 
         axios.put(`http://localhost:3001/api/tasks/${id}`, task).then((response) => {
             alert('Task Updated Successully')
+            window.location.href = '/';
         });
     };
 
     return (
         <div>
-            <h2>Edit Task</h2>
+            <h2>Edit Task</h2>             
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -113,6 +115,10 @@ function TaskEdit() {
                 />
                 <button type="submit">Update Task</button>
             </form>
+            <div id='link'>
+                
+            <Link id='home' to="/"> Home</Link>
+            </div>
         </div>
     );
 }
