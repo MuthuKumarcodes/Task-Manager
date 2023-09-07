@@ -74,7 +74,13 @@ To get a local copy up and running, follow these steps.
    - Set up your database configuration in `config.js`.
    - Make any other necessary configuration changes.
 
-5. Start the backend server:
+5. Push the schema structure (run this command before starting the backend):
+
+   ```bash
+   npm run push
+   ```
+
+6. Start the backend server:
 
    ```bash
    npm start
