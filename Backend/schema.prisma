@@ -1,0 +1,18 @@
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:root@127.0.0.1:3306/Haatch"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model tasks {
+  id          Int      @id @default(autoincrement())
+  heading     String
+  description String
+  date        DateTime
+  time        String
+  priority    String
+  image       Bytes?  // Use Bytes? for binary data (BLOB)
+}
