@@ -56,40 +56,21 @@ app.get('/api/tasks', async (req, res) => {
 
 app.post('/api/tasks', async (req, res) => {
     const { heading, description, date, time, priority, image } = req.body;
-        console.log("********************************",req.body);
+
     if (!heading || !description || !date || !time || priority === undefined) {
         return res.status(400).json({ error: 'Missing or invalid fields' });
     }
-
-    // Log the request payload for debugging
-    console.log('Received POST request with payload:', req.body);
 
     try {
         const connection = await pool.getConnection();
         await connection.beginTransaction();
 
-        const insertTaskQuery = 'INSERT INTO tasks (heading, description, date, time, priority) VALUES (?, ?, ?, ?, ?)';
-        const insertTaskValues = [heading, description, date, time, priority];
+        const insertTaskQuery = 'INSERT INTO tasks (heading, description, date, time, priority, image) VALUES (?, ?, ?, ?, ?, ?)';
+        const insertTaskValues = [heading, description, date, time, priority, image];
         
         const [insertResult] = await connection.execute(insertTaskQuery, insertTaskValues);
 
         const insertedTaskId = insertResult.insertId;
-
-        if (image) {
-            const imageDir = 'images';
-            if (!fs.existsSync(imageDir)) {
-                fs.mkdirSync(imageDir);
-            }
-
-            const imageFilename = `image_${insertedTaskId}.jpg`;
-
-            const writeFile = util.promisify(fs.writeFile);
-            await writeFile(`${imageDir}/${imageFilename}`, image, 'binary');
-
-            const updateImageQuery = 'UPDATE tasks SET image = ? WHERE id = ?';
-            const updateImageValues = [imageFilename, insertedTaskId];
-            await connection.execute(updateImageQuery, updateImageValues);
-        }
 
         await connection.commit();
         connection.release();

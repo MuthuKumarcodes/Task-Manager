@@ -21,18 +21,18 @@ function TaskForm() {
             [name]: value,
         });
     };
-    
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (!file) {
             return;
         }
-    
+
         setNewTask({
             ...newTask,
             image: file, // Set the image property with the selected file
         });
-    
+
         const reader = new FileReader();
         reader.onload = (e) => {
             const imageData = new Uint8Array(e.target.result);
@@ -43,26 +43,53 @@ function TaskForm() {
         };
         reader.readAsArrayBuffer(file);
     };
-    
+
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const requestData = {
-        heading: newTask.heading,
-        description: newTask.description,
-        date: newTask.date,
-        time: newTask.time,
-        priority: newTask.priority,
-        image: newTask.imageBytes ? btoa(newTask.imageBytes) : null, // Encode image data as Base64
-    };
+        const requestData = {
+            heading: newTask.heading,
+            description: newTask.description,
+            date: newTask.date,
+            time: newTask.time,
+            priority: newTask.priority,
+            image: newTask.imageBytes ? btoa(newTask.imageBytes) : null, 
+        };
 
-    try {
-        const response = await axios.post('http://localhost:3001/api/tasks', requestData);
+        try {
+            const response = await axios.post('http://localhost:3001/api/tasks', requestData);
 
-        if (response.status === 200) {
-            console.log('Task added successfully:', response.data);
-            alert("Task Created Successfully");
+            if (response.status === 200) {
+                console.log('Task added successfully:', response.data);
+                alert("Task Created Successfully");
+
+                setNewTask({
+                    heading: '',
+                    description: '',
+                    date: '',
+                    time: '',
+                    image: null,
+                    imageBytes: null,
+                    priority: 'low',
+                });
+            } else {
+                console.error('Error adding task: Unexpected response status', response);
+                alert("Something Went Wrong. Try Again!");
+
+                setNewTask({
+                    heading: '',
+                    description: '',
+                    date: '',
+                    time: '',
+                    image: null,
+                    imageBytes: null,
+                    priority: 'low'
+                });
+            }
+        } catch (error) {
+            console.error('Error adding task:', error);
+            alert("Something Went Wrong. Try Again!");
 
             setNewTask({
                 heading: '',
@@ -71,17 +98,12 @@ function TaskForm() {
                 time: '',
                 image: null,
                 imageBytes: null,
-                priority: 'low',
+                priority: 'low'
             });
-        } else {
-            console.error('Error adding task: Unexpected response status', response);
         }
-    } catch (error) {
-        console.error('Error adding task:', error);
-    }
-};
+    };
 
-    
+
 
     return (
         <div>
