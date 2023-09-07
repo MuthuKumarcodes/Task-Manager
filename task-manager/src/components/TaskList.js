@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { Link } from 'react-router-dom';
 import './TaskList.css';
 
 function TaskList() {
@@ -16,16 +16,13 @@ function TaskList() {
     const filterTasks = () => {
         if (filter === 'all') return tasks;
         return tasks.filter((task) => task.priority === filter);
-
     };
 
     const handleDelete = async (taskId) => {
         try {
-            // Send a DELETE request to your API to delete the task
             const response = await axios.delete(`http://localhost:3001/api/tasks/${taskId}`);
-            
+
             if (response.status === 200) {
-                // If deletion is successful, update the task list
                 setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
                 console.log('Task deleted successfully:', response.data);
             } else {
@@ -46,7 +43,9 @@ function TaskList() {
                 <option value="high">High Priority</option>
             </select>
             <div className="button-container">
-                <Link to="/add" className="add-task-button">Add Task</Link>
+                <Link to="/add" className="add-task-button">
+                    Add Task
+                </Link>
             </div>
             <table>
                 <thead>
@@ -57,11 +56,11 @@ function TaskList() {
                         <th>Image</th>
                         <th>Edit</th>
                         <th>Delete</th>
+                        <th>View</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filterTasks().map((task) => (
-
                         <tr key={task.id}>
                             <td>{task.heading}</td>
                             <td>{task.description}</td>
@@ -69,17 +68,22 @@ function TaskList() {
                             <td>
                                 {task.image && (
                                     <img
-                                    src={`data:image/jpg;base64,${task.image}`} // Replace task.imageType with the actual MIME type
-                                    alt="Task"
-                                    style={{ maxWidth: '100px' }}
-                                />                                
+                                        src={`data:image/jpg;base64,${task.image}`}
+                                        alt="Task"
+                                        style={{ maxWidth: '100px' }}
+                                    />
                                 )}
                             </td>
                             <td>
                                 <Link to={`/edit/${task.id}`}>Edit</Link>
                             </td>
                             <td>
-                                <button id='del' onClick={() => handleDelete(task.id)}>Delete</button>
+                                <button id="del" onClick={() => handleDelete(task.id)}>
+                                    Delete
+                                </button>
+                            </td>
+                            <td>
+                                <Link id='view' to={`/task/${task.id}`}>View Details</Link> {/* Add this button */}
                             </td>
                         </tr>
                     ))}

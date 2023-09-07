@@ -8,7 +8,9 @@ function TaskEdit() {
     const [task, setTask] = useState({
         heading: '',
         description: '',
-        priority: '', // Add priority to the initial state
+        priority: '',
+        date: '', 
+        time: '', 
     });
 
     useEffect(() => {
@@ -17,7 +19,9 @@ function TaskEdit() {
             setTask({
                 heading: taskData.heading,
                 description: taskData.description,
-                priority: taskData.priority, // Set the priority from the API response
+                priority: taskData.priority,
+                date: taskData.date, 
+                time: taskData.time, 
             });
         });
     }, [id]);
@@ -31,17 +35,32 @@ function TaskEdit() {
     };
 
     const handleImageChange = (e) => {
-        setTask({
-            ...task,
-            image: e.target.files[0],
-        });
+        const file = e.target.files[0];
+    
+        if (!file) {
+            return;
+        }
+    
+        const reader = new FileReader();
+    
+        reader.onload = (event) => {
+            const imageData = event.target.result;
+    
+            setTask({
+                ...task,
+                image: imageData, 
+            });
+        };
+    
+        reader.readAsDataURL(file);
     };
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         axios.put(`http://localhost:3001/api/tasks/${id}`, task).then((response) => {
-            console.log('Task updated successfully:', response.data);
+            alert('Task Updated Successully')
         });
     };
 

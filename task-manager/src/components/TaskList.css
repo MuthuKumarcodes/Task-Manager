@@ -1,13 +1,9 @@
-/* TaskList.css */
-
-/* Style the table */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-/* Style table headers */
 th {
     background-color: #f2f2f2;
     text-align: left;
@@ -15,14 +11,12 @@ th {
     border: 1px solid #ddd;
 }
 
-/* Style table data cells */
 td {
     text-align: left;
     padding: 10px;
     border: 1px solid #ddd;
 }
 
-/* Style the edit and delete links */
 a {
     text-decoration: none;
     color: white;
@@ -34,10 +28,10 @@ a {
 
 .button-container {
     text-align: right;
-    margin-top: 10px; /* Adjust the margin as needed */
+    margin-top: 10px;
 }
 
-#del{
+#del {
     background-color: red;
     color: #fff;
     padding: 5px 10px;
@@ -45,6 +39,9 @@ a {
     border: #fff;
 }
 
+#view{
+    background-color: purple;
+}
 a:hover {
     text-decoration: underline;
 }

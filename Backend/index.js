@@ -47,7 +47,18 @@ app.get('/api/tasks', async (req, res) => {
         const connection = await pool.getConnection();
         const [rows] = await connection.execute('SELECT * FROM tasks');
         connection.release();
-        res.json(rows);
+
+        // Convert image Buffer to base64-encoded string
+        const tasksWithBase64Images = rows.map((task) => {
+            if (task.image instanceof Buffer) {
+                const base64Image = task.image.toString('base64');
+                return { ...task, image: base64Image };
+            }
+            console.log(task,"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+            return task;
+        });
+
+        res.json(tasksWithBase64Images);
     } catch (err) {
         console.error('Error querying tasks:', err);
         res.status(500).json({ error: 'Internal server error' });
