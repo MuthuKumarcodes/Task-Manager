@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams, Link } from 'react-router-dom'; // Import useParams
 import axios from 'axios';
 
 function TaskDetail() {
@@ -15,6 +15,9 @@ function TaskDetail() {
 
   return (
     <div>
+      <div id='link'>
+        <Link id='home' to="/"> Home</Link>
+      </div>
       <h2>Task Detail</h2>
       <h3>{task.heading}</h3>
       <p>{task.description}</p>
