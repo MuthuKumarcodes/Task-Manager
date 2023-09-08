@@ -1,31 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom'; // Import useParams
 import axios from 'axios';
+import { useParams, Link } from 'react-router-dom';
 
-function TaskDetail() {
-  const { id } = useParams(); // Get the "id" parameter from the route
-
-  const [task, setTask] = useState({});
-
-  useEffect(() => {
-    axios.get(`http://localhost:3001/api/tasks/${id}`).then((response) => {
-      setTask(response.data);
+function TaskDetails() {
+    const { id } = useParams();
+    const [task, setTask] = useState({
+        heading: '',
+        description: '',
+        priority: '',
+        date: '',
+        time: '',
+        image: '', // Add image field to state
     });
-  }, [id]); // Use the "id" parameter in the dependency array
 
-  return (
-    <div>
-      <div id='link'>
-        <Link id='home' to="/"> Home</Link>
-      </div>
-      <h2>Task Detail</h2>
-      <h3>{task.heading}</h3>
-      <p>{task.description}</p>
-      <p>Date: {task.date}</p>
-      <p>Time: {task.time}</p>
-      <img src={task.imageUrl} alt="Task" />
-    </div>
-  );
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/tasks/${id}`).then((response) => {
+            const taskData = response.data;
+            console.log(taskData)
+            setTask({
+                heading: taskData.heading,
+                description: taskData.description,
+                priority: taskData.priority,
+                date: taskData.date,
+                time: taskData.time,
+                image: taskData.image, // Set the image from the API response
+            });
+        });
+    }, [id]);
+
+    return (
+        <div>
+            <h2>Task Details</h2>
+            <p>Heading: {task.heading}</p>
+            <p>Description: {task.description}</p>
+            <p>Priority: {task.priority}</p>
+            <p>Date: {task.date}</p>
+            <p>Time: {task.time}</p>
+            <p>Image:</p>
+            {task.image && (
+                <img
+                    src={`data:/;base64,${task.image}`}
+                    alt="Task"
+                    style={{ maxWidth: '100px' }}
+                />
+            )}
+            <Link to="/">Back to Task List</Link>
+        </div>
+    );
 }
 
-export default TaskDetail;
+export default TaskDetails;

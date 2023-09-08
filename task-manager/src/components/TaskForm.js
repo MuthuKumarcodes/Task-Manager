@@ -61,7 +61,7 @@ function TaskForm() {
             const response = await axios.post('http://localhost:3001/api/tasks', requestData);
 
             if (response.status === 200) {
-                console.log('Task added successfully:', response.data);
+                console.log('Task added successfully from frontend:', response.data);
                 alert("Task Created Successfully");
 
                 setNewTask({
@@ -154,7 +154,7 @@ function TaskForm() {
                 </div>
                 <input
                     type="file"
-                    name="image" // This name attribute should match the server-side code
+                    name="image" 
                     accept="image/*"
                     onChange={handleImageChange}
                     required

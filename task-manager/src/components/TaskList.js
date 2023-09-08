@@ -10,6 +10,7 @@ function TaskList() {
     useEffect(() => {
         axios.get('http://localhost:3001/api/tasks').then((response) => {
             setTasks(response.data);
+            console.log('Task Readed successfully from frontend:', response.data);
         });
     }, []);
 
@@ -68,7 +69,7 @@ function TaskList() {
                             <td>
                                 {task.image && (
                                     <img
-                                        src={`data:image/jpg;base64,${task.image}`}
+                                        src={`data:/;base64,${task.image}`}
                                         alt="Task"
                                         style={{ maxWidth: '100px' }}
                                     />
